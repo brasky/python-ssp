@@ -1,6 +1,6 @@
 import os
 
-from ssp.package import SecurityPlan
+from ssp.securityplan import SecurityPlan
 
 import docx
 
