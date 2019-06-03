@@ -1,24 +1,24 @@
 from docx import Document
+from ssp.control import Control
 
 class SecurityPlan(object):
     """
     Not intended to be constructed directly. Use ssp.api.SSP() to open an SSP.
     """
 
-    tables = []
-    table_name_to_table_index = {}
+    control_list = []
+    control_list_to_table_index = {}
 
     def __init__(self, path):
         self.document = Document(path)
-        self.tables = self.document.tables
         self.version = self.get_version()
         self.child_ssp = None
         if self.version == '08282018':
             self.child_ssp = SecurityPlan_08282018(self)
         else:
             raise ValueError('This template version is not compatible.')
-        self.child_ssp.create_table_index()
-        self.table_name_to_table_index = self.child_ssp.table_name_to_table_index
+        self.control_list = self.child_ssp.control_list
+        self.control_list_to_table_index = self.child_ssp.control_list_to_table_index
 
     def get_version(self):
         """
@@ -46,16 +46,35 @@ class SecurityPlan_08282018(SecurityPlan):
     def __init__(self, ssp):
         self.document = ssp.document
         self.tables = ssp.document.tables
-        self.create_table_index()
+        self.create_control_index()
 
-    def create_table_index(self):
+    def is_cis_table(self, table):
+        try:
+            if '-' in table.cell(0,0).text and len(table.cell(0,0).text) < 9:
+                return True
+            return False
+        except:
+            print('exception')
+            return False
+
+    def create_control_index(self):
         """
-        Fills the table index dictionary.
-        table_name (i.e. Cell(0,0).text) = position in table array
+        Creates control objects for each pair of CIS/Implementation tables 
+        and adds them to control_list and the list index. 
         """
-        for index, table in enumerate(self.tables):
+        implementation_table_next = False
+        cis_table = ''
+        for table in self.document.tables:
             try:
-                self.table_name_to_table_index[table.cell(0,0).text] = index
-            except:
-                # Need to incorporate logging
-                self.table_name_to_table_index['blank'] = index 
+                if self.is_cis_table(table):
+                    implementation_table_next = True
+                    cis_table = table
+                elif implementation_table_next:
+                    new_control = Control(cis_table, table)
+                    self.control_list_to_table_index[new_control.number] = len(self.control_list)
+                    self.control_list.append(new_control)
+                    implementation_table_next = False
+            except Exception as e:
+                print(e)
+
+                
