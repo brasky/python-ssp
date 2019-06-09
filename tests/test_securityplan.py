@@ -31,3 +31,14 @@ class TestSecurityPlan(object):
 
         securityplan = SecurityPlan(path + file_name)
         assert securityplan.version == version
+
+    def test_control(self):
+        control = 'AC-1'
+        version = '08282018'
+        path = TEST_DIR + '/test_files/blank_templates/' + version + '/'
+        file_name = 'FedRAMP-SSP-High-Baseline-Template.docx'
+    
+        securityplan = SecurityPlan(path + file_name)
+
+        control_object = securityplan.control(control)
+        assert control_object.number == control

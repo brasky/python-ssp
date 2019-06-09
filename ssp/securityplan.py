@@ -20,6 +20,15 @@ class SecurityPlan(object):
         self.control_list = self.child_ssp.control_list
         self.control_list_to_table_index = self.child_ssp.control_list_to_table_index
 
+    def __iter__(self):
+        return iter(self.control_list)
+    
+    def control(self, control):
+        try:
+            return self.control_list[self.control_list_to_table_index[control.upper()]]
+        except KeyError:
+            raise KeyError('No control found with that name')
+
     def get_version(self):
         """
         Needs to take a Document file and return either a version number or raise an error if not an ssp.
@@ -54,7 +63,6 @@ class SecurityPlan_08282018(SecurityPlan):
                 return True
             return False
         except:
-            print('exception')
             return False
 
     def create_control_index(self):
@@ -76,5 +84,3 @@ class SecurityPlan_08282018(SecurityPlan):
                     implementation_table_next = False
             except Exception as e:
                 print(e)
-
-                
