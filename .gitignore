@@ -1,6 +1,9 @@
 #testing scripts
 script.py
 
+# Word document temp files
+~$*
+
 # VSCode
 .vscode
 
