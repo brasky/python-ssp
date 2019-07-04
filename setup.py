@@ -15,7 +15,7 @@ def text_of(relpath):
 
 NAME = 'python-ssp'
 VERSION = '0.0.1'
-DESCRIPTION = 'Extract data from FedRAMP SSP templates'
+DESCRIPTION = 'Library for interfacing with FedRAMP system security plan templates.'
 KEYWORDS = 'fedramp ssp word'
 AUTHOR = 'Elliot DeMatteis'
 URL = 'https://github.com/brasky/python-ssp'
@@ -25,10 +25,9 @@ LONG_DESCRIPTION = text_of('README.md') + '\n\n' + text_of('HISTORY.rst')
 LONG_DESCRIPTION_CONTENT_TYPE="text/markdown"
 PACKAGES = find_packages(exclude=['tests', 'tests.*'])
 CLASSIFIERS = [
-        "Development Status :: 1 - Planning",
+        "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: Microsoft :: Windows",
 ]
 
 INSTALL_REQUIRES = ['python-docx']
