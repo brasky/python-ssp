@@ -21,7 +21,7 @@ AUTHOR = 'Elliot DeMatteis'
 URL = 'https://github.com/brasky/python-ssp'
 LICENSE = text_of('LICENSE')
 PACKAGES = find_packages(exclude=['tests', 'tests.*'])
-LONG_DESCRIPTION = text_of('README.md') + '\n\n' + text_of('HISTORY.rst')
+LONG_DESCRIPTION = text_of('README.md')
 LONG_DESCRIPTION_CONTENT_TYPE="text/markdown"
 PACKAGES = find_packages(exclude=['tests', 'tests.*'])
 CLASSIFIERS = [
@@ -39,7 +39,7 @@ params = {
     'version':          VERSION,
     'description':      DESCRIPTION,
     'keywords':         KEYWORDS,
-    'long_description_content_type': 'text/markdown',
+    'long_description_content_type': LONG_DESCRIPTION_CONTENT_TYPE,
     'long_description': LONG_DESCRIPTION,
     'author':           AUTHOR,
     'url':              URL,
