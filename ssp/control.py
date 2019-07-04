@@ -22,10 +22,14 @@ class Control(object):
     def get_parts(self):
         self.parts = []
         for row in self.implementation_table.rows:
-            if self.number not in row.cells[0].text.replace(' ', ''):
+            if "Part" in row.cells[0].text and len(row.cells[0].text) < 7:
                 self.parts.append(row.cells[0].text.replace('Part ', '').strip())
+            elif len(self.parts) < 1 and len(self.implementation_table.rows) < 3:
+                self.parts.append(None)
 
     def part(self, part_id):
+        if part_id == None:
+            return self.implementation_table.cell(1,0)
         if part_id in self.parts:
             split_alpha_part = re.compile(r'\w\d')
             if split_alpha_part.match(part_id):
