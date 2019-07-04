@@ -24,6 +24,9 @@ class SecurityPlan(object):
         return iter(self.control_list)
     
     def control(self, control):
+        """
+        Takes a control as a string and returns the matching control object in the SSP.
+        """
         try:
             return self.control_list[self.control_list_to_table_index[control.upper()]]
         except KeyError:
