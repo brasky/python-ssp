@@ -35,6 +35,9 @@ class Control(object):
                 self.parts.append(None)
 
     def part(self, part_id):
+        """
+        Takes string part_id and returns corresponding implementation cell object.
+        """
         if part_id == None:
             return self.implementation_table.cell(1,0)
         if part_id in self.parts:
@@ -52,12 +55,28 @@ class Control(object):
             raise ValueError('Control does not have part ' + part_id)
 
     def get_responsible_role(self):
+        """
+        Adds responsible role text to control object.
+        """
         self.responsible_role = self.cis_table.cell(1,0).text.replace('Responsible Role:', '').strip()
 
     def add_to_parameters(self, cell):
-        self.parameters.append(cell.text.split(':')[1].strip())
-
+        """
+        Appends parameter cell text to control object parameter list.
+        """
+        if ':' in cell.text:
+            try:
+                self.parameters.append(cell.text.split(':')[1].strip())
+            except:
+                pass
+                # print('WARNING: No parameters defined in control ' + self.number)
+        else:
+            self.parameters.append(cell.text.strip())
+            # print('WARNING: No colon in parameter cell for control ' + self.number)
     def get_implementation_status(self, cell):
+        """
+        Appends implementation status checkbox data to control object implementation status list.
+        """
         self.implementation_status = []
         for paragraph in cell.paragraphs:
             p = paragraph._element
@@ -76,6 +95,9 @@ class Control(object):
                     self.implementation_status.append('Not Applicable')
 
     def get_control_origination(self, cell):
+        """
+        Appends control origination checkbox data to control object control origination list.
+        """
         self.control_origination = []
         for paragraph in cell.paragraphs:
             p = paragraph._element
