@@ -22,7 +22,7 @@ class Control(object):
     def get_parts(self):
         self.parts = []
         for row in self.implementation_table.rows:
-            if self.number not in row.cells[0].text:
+            if self.number not in row.cells[0].text.replace(' ', ''):
                 self.parts.append(row.cells[0].text.replace('Part ', '').strip())
 
     def part(self, part_id):
