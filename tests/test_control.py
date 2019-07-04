@@ -2,7 +2,7 @@ import os
 import sys
 
 from docx import Document
-
+from ssp import SSP
 from ssp.control import Control
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -51,3 +51,20 @@ class TestControl(object):
                 pass
 
         assert test_control.part('d').text == ''
+
+    def test_responsible_role(self):
+        ssp = SSP(TEST_DIR + r'/test_files/blank_templates/08282018/FedRAMP-SSP-High-Baseline-Template.docx')
+        assert ssp.control('AC-1').responsible_role == "My Role"
+
+    def test_parameters(self):
+        ssp = SSP(TEST_DIR + r'/test_files/blank_templates/08282018/FedRAMP-SSP-High-Baseline-Template.docx')
+        assert ssp.control('AC-1').parameters == ['Param AC-1(a)','Param AC-1(b)(1)','Param AC-1(b)(2)']
+
+    def test_implementation_status(self):
+        ssp = SSP(TEST_DIR + r'/test_files/blank_templates/08282018/FedRAMP-SSP-High-Baseline-Template.docx')
+        assert ssp.control('AC-1').implementation_status == ["Implemented"]
+
+    def test_control_origination(self):
+        ssp = SSP(TEST_DIR + r'/test_files/blank_templates/08282018/FedRAMP-SSP-High-Baseline-Template.docx')
+        assert ssp.control('AC-1').control_origination == ["Service Provider Corporate"]
+    

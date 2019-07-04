@@ -12,6 +12,13 @@ class Control(object):
         self.implementation_table = implementation_table
         self.number = cis_table.cell(0,0).text
         self.get_parts()
+        self.get_responsible_role()
+        self.parameters = []
+        rows = len(self.cis_table.rows)
+        for row in range(2, rows-2):
+            self.add_to_parameters(self.cis_table.rows[row].cells[0])
+        self.get_implementation_status(self.cis_table.rows[rows-2].cells[0])
+        self.get_control_origination(self.cis_table.rows[rows-1].cells[0])
 
     def __repr__(self):
         return self.number
@@ -43,3 +50,51 @@ class Control(object):
                 return self.implementation_table.cell(self.LETTERS[part_id], 1)
         else:
             raise ValueError('Control does not have part ' + part_id)
+
+    def get_responsible_role(self):
+        self.responsible_role = self.cis_table.cell(1,0).text.replace('Responsible Role:', '').strip()
+
+    def add_to_parameters(self, cell):
+        self.parameters.append(cell.text.split(':')[1].strip())
+
+    def get_implementation_status(self, cell):
+        self.implementation_status = []
+        for paragraph in cell.paragraphs:
+            p = paragraph._element
+            if 'w14:checked w14:val="1"' in p.xml:
+                xpath_elements = p.xpath('.//w:t')
+                implementation_status = xpath_elements[len(xpath_elements)-1].text.strip()
+                if 'Partially' in implementation_status:
+                    self.implementation_status.append('Partially Implemented')
+                elif 'Implemented' in implementation_status:
+                    self.implementation_status.append('Implemented')
+                elif 'Planned' in implementation_status:
+                    self.implementation_status.append('Planned')
+                elif 'Alternative' in implementation_status:
+                    self.implementation_status.append('Alternative Implementation')
+                elif 'Not' in implementation_status:
+                    self.implementation_status.append('Not Applicable')
+
+    def get_control_origination(self, cell):
+        self.control_origination = []
+        for paragraph in cell.paragraphs:
+            p = paragraph._element
+            if 'w14:checked w14:val="1"' in p.xml:
+                xpath_elements = p.xpath('.//w:t')
+                control_origination = xpath_elements[len(xpath_elements)-1].text.strip()
+                if "Service Provider Corporate" in control_origination:
+                    self.control_origination.append("Service Provider Corporate")
+                elif "Service Provider System Specific" in control_origination:
+                    self.control_origination.append("Service Provider System Specific")
+                elif "Hybrid" in control_origination:
+                    self.control_origination.append("Service Provider Hybrid")
+                elif "Configured" in control_origination:
+                    self.control_origination.append("Configured by Customer")
+                elif "Provided" in control_origination:
+                    self.control_origination.append("Provided by Customer")
+                elif "Shared" in control_origination:
+                    self.control_origination.append("Shared")
+                elif "Inherited" in control_origination:
+                    self.control_origination.append("Inherited")
+                elif "Not" in control_origination:
+                    self.control_origination.append("Not Applicable")
