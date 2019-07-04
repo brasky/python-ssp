@@ -39,8 +39,8 @@ params = {
     'version':          VERSION,
     'description':      DESCRIPTION,
     'keywords':         KEYWORDS,
+    'long_description': "See https://github.com/brasky/python-ssp",
     'long_description_content_type': LONG_DESCRIPTION_CONTENT_TYPE,
-    'long_description': LONG_DESCRIPTION,
     'author':           AUTHOR,
     'url':              URL,
     'license':          LICENSE,
@@ -50,5 +50,6 @@ params = {
     'test_suite':       TEST_SUITE,
     'classifiers':      CLASSIFIERS,
 }
+
 
 setup(**params)
