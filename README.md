@@ -74,9 +74,9 @@ Control objects are defined as a pair of tables (the CIS table and the implement
 
 After getting the control object you want, you can either get the part you want or get the list of parts the control has. Parts are equivalent to rows in the implementations table. 
 
-The part list is defined in the `parts` control attribute. For example, `security_plan.control('AC-2').parts` should return a list of parts 'a' through 'k'. The `__iter__` for control objects will iterate through parts, so you can do the following `for part in control` to loop through all the parts.
+The part list is defined in the `parts` control attribute. For example, `security_plan.control('AC-2').parts` should return a list of parts 'a' through 'k'. The `__iter__` for control objects will iterate through parts, so you can do `for part in control` to loop through all the parts.
 
-The `part()` method allows you to specify the part you want with `security_plan.control('AC-2').part('a')` and returns a docx cell object. To get the text you just add `.text`, so `security_plan.control('AC-2').part('a').text` will give you the implenentation for AC-2(a).
+The `part()` method allows you to specify the part you want with `security_plan.control('AC-2').part('a')` and returns a docx cell object. To get the text you just add `.text`, so `security_plan.control('AC-2').part('a').text` will give you the implementation for AC-2(a).
 
 If a control has no parts and just 1 implementation row, `.parts` will return `[None]` and `.parts(None)` will return the cell object for that implementation. For example:
 
