@@ -14,12 +14,12 @@ def text_of(relpath):
     return text
 
 NAME = 'python-ssp'
-VERSION = '0.0.1'
+VERSION = '0.0.3'
 DESCRIPTION = 'Library for interfacing with FedRAMP system security plan templates.'
 KEYWORDS = 'fedramp ssp word'
 AUTHOR = 'Elliot DeMatteis'
 URL = 'https://github.com/brasky/python-ssp'
-LICENSE = text_of('LICENSE')
+LICENSE = "MIT License"
 PACKAGES = find_packages(exclude=['tests', 'tests.*'])
 LONG_DESCRIPTION = text_of('README.md')
 LONG_DESCRIPTION_CONTENT_TYPE="text/markdown"
