@@ -55,14 +55,9 @@ Once your SSP is open, you probably want to look at information about your imple
 
 ### Get a list of all the controls
 
-An SSP object has a control_list attribute which has a list of all the controls that were identified on import. 
+An SSP object has a control_list attribute which has a list of all the controls that were identified on import. The `__iter__`  method is defined to return the control_list. You can loop through every control like so
 ```python
-security_plan.control_list
-```
-
-You can loop through this if you need to get details from every control
-```python
-for control in security_plan.control_list:
+for control in security_plan:
 ...
 ```
 
