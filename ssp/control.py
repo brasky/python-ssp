@@ -64,15 +64,8 @@ class Control(object):
         """
         Appends parameter cell text to control object parameter list.
         """
-        if ':' in cell.text:
-            try:
-                self.parameters.append(cell.text.split(':')[1].strip())
-            except:
-                pass
-                # print('WARNING: No parameters defined in control ' + self.number)
-        else:
-            self.parameters.append(cell.text.strip())
-            # print('WARNING: No colon in parameter cell for control ' + self.number)
+        self.parameters.append(cell.text.strip())
+            
     def get_implementation_status(self, cell):
         """
         Appends implementation status checkbox data to control object implementation status list.
