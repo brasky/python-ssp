@@ -8,10 +8,9 @@ class SecurityPlan(object):
     Not intended to be constructed directly. Use ssp.api.SSP() to open an SSP.
     """
 
-    control_list = []
-    control_list_to_table_index = {}
-
     def __init__(self, path):
+        self.control_list = []
+        self.control_list_to_table_index = {}
         self.document = Document(path)
         self.version = self.get_version()
         self.child_ssp = None
@@ -58,6 +57,8 @@ class SecurityPlan_08282018(SecurityPlan):
     """
 
     def __init__(self, ssp):
+        self.control_list = []
+        self.control_list_to_table_index = {}
         self.document = ssp.document
         self.tables = ssp.document.tables
         self.create_control_index()
