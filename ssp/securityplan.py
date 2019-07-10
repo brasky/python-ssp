@@ -10,6 +10,7 @@ class SecurityPlan(object):
     control_list_to_table_index = {}
 
     def __init__(self, path):
+        self.source = path
         self.document = Document(path)
         self.version = self.get_version()
         self.child_ssp = None
