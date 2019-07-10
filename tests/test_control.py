@@ -58,7 +58,7 @@ class TestControl(object):
 
     def test_parameters(self):
         ssp = SSP(TEST_DIR + r'/test_files/blank_templates/08282018/FedRAMP-SSP-High-Baseline-Template.docx')
-        assert ssp.control('AC-1').parameters == ['Param AC-1(a)','Param AC-1(b)(1)','Param AC-1(b)(2)']
+        assert ssp.control('AC-1').parameters == ['Parameter AC-1(a): Param AC-1(a)','Parameter AC-1(b)(1): Param AC-1(b)(1)','Parameter AC-1(b)(2): Param AC-1(b)(2)']
 
     def test_implementation_status(self):
         ssp = SSP(TEST_DIR + r'/test_files/blank_templates/08282018/FedRAMP-SSP-High-Baseline-Template.docx')
