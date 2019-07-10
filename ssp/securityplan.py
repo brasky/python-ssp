@@ -1,3 +1,5 @@
+import re
+
 from docx import Document
 from ssp.control import Control
 
@@ -6,11 +8,9 @@ class SecurityPlan(object):
     Not intended to be constructed directly. Use ssp.api.SSP() to open an SSP.
     """
 
-    control_list = []
-    control_list_to_table_index = {}
-
     def __init__(self, path):
-        self.source = path
+        self.control_list = []
+        self.control_list_to_table_index = {}
         self.document = Document(path)
         self.version = self.get_version()
         self.child_ssp = None
@@ -23,7 +23,7 @@ class SecurityPlan(object):
 
     def __iter__(self):
         return iter(self.control_list)
-    
+
     def control(self, control):
         """
         Takes a control as a string and returns the matching control object in the SSP.
@@ -55,24 +55,39 @@ class SecurityPlan_08282018(SecurityPlan):
     Child class for the SSP version published 08/28/2018. 
     Takes an SSP object and returns a child SSP object specific to this template.
     """
-    
+
     def __init__(self, ssp):
+        self.control_list = []
+        self.control_list_to_table_index = {}
         self.document = ssp.document
         self.tables = ssp.document.tables
         self.create_control_index()
 
     def is_cis_table(self, table):
         try:
-            if '-' in table.cell(0,0).text and len(table.cell(0,0).text) < 9:
+            if '-' in table.cell(0,0).text and self.is_valid_control(table.cell(0,0).text):
                 return True
             return False
         except:
             return False
 
+    def is_valid_control(self, text):
+        """
+        Takes control text (cis_table cell 0,0) and returns whether it is properly formatted.
+        Regex needs to match AC-1 / AC-2(2) / AC-2(Ext) / AC-2(Privacy)
+        etc all with/without spaces.
+        TODO: In the future could use this to collect more properties like:
+        - is it a privacy control or extension?
+        - is it an enhancement? 
+        """
+        regex = r'([A-Z]*-[0-9]*\s*(\([0-9]*\))*)(\s*\([A-z]*\))*$'
+        match_groups = re.search(regex, text)
+        return bool(match_groups)
+
     def create_control_index(self):
         """
-        Creates control objects for each pair of CIS/Implementation tables 
-        and adds them to control_list and the list index. 
+        Creates control objects for each pair of CIS/Implementation tables
+        and adds them to control_list and the list index.
         """
         implementation_table_next = False
         cis_table = ''
@@ -83,7 +98,7 @@ class SecurityPlan_08282018(SecurityPlan):
                     cis_table = table
                 elif implementation_table_next:
                     new_control = Control(cis_table, table)
-                    self.control_list_to_table_index[new_control.number] = len(self.control_list)
+                    self.control_list_to_table_index[new_control.number.upper()] = len(self.control_list)
                     self.control_list.append(new_control)
                     implementation_table_next = False
             except Exception as e:
