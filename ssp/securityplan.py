@@ -9,6 +9,7 @@ class SecurityPlan(object):
     """
 
     def __init__(self, path):
+        self.source = path
         self.control_list = []
         self.control_list_to_table_index = {}
         self.document = Document(path)
