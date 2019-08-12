@@ -80,7 +80,7 @@ class SecurityPlan_08282018(SecurityPlan):
         - is it a privacy control or extension?
         - is it an enhancement? 
         """
-        regex = r'([A-Z]*-[0-9]*\s*(\([0-9]*\))*)(\s*\([A-z]*\))*$'
+        regex = r'([A-Z]*-[0-9]*\s*(\([0-9]*\))*)(\s*\([A-z]*\))*\s*(Req.)*$'
         match_groups = re.search(regex, text)
         return bool(match_groups)
 
