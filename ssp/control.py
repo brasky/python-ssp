@@ -120,6 +120,8 @@ class Control(object):
             if 'w14:checked w14:val="1"' in p.xml:
                 xpath_elements = p.xpath('.//w:t')
                 control_origination = xpath_elements[len(xpath_elements)-1].text.strip()
+                if not control_origination:
+                    control_origination = xpath_elements[len(xpath_elements)-2].text.strip() #TODO: this is really ugly, but had to be done because inherited checkboxes werent being captured.
                 if "Service Provider Corporate" in control_origination:
                     self.control_origination.append("Service Provider Corporate")
                 elif "Service Provider System Specific" in control_origination:
