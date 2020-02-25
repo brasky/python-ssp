@@ -109,6 +109,18 @@ class Control(object):
                     self.implementation_status.append('Alternative Implementation')
                 elif 'Not' in implementation_status:
                     self.implementation_status.append('Not Applicable')
+            elif '☒' in paragraph.text:
+                implementation_status = paragraph.text.strip()
+                if 'Partially' in implementation_status:
+                    self.implementation_status.append('Partially Implemented')
+                elif 'Implemented' in implementation_status:
+                    self.implementation_status.append('Implemented')
+                elif 'Planned' in implementation_status:
+                    self.implementation_status.append('Planned')
+                elif 'Alternative' in implementation_status:
+                    self.implementation_status.append('Alternative Implementation')
+                elif 'Not' in implementation_status:
+                    self.implementation_status.append('Not Applicable')
 
     def get_control_origination(self, cell):
         """
@@ -139,6 +151,24 @@ class Control(object):
                 elif "Not" in control_origination:
                     self.control_origination.append("Not Applicable")
             elif '<w:checked/>\n' in p.xml or '<w:default w:val="1"/>' in p.xml:
+                control_origination = paragraph.text.strip()
+                if "Service Provider Corporate" in control_origination:
+                    self.control_origination.append("Service Provider Corporate")
+                elif "Service Provider System Specific" in control_origination:
+                    self.control_origination.append("Service Provider System Specific")
+                elif "Hybrid" in control_origination:
+                    self.control_origination.append("Service Provider Hybrid")
+                elif "Configured" in control_origination:
+                    self.control_origination.append("Configured by Customer")
+                elif "Provided" in control_origination:
+                    self.control_origination.append("Provided by Customer")
+                elif "Shared" in control_origination:
+                    self.control_origination.append("Shared")
+                elif "Inherited" in control_origination:
+                    self.control_origination.append("Inherited")
+                elif "Not" in control_origination:
+                    self.control_origination.append("Not Applicable")
+            elif '☒' in paragraph.text:
                 control_origination = paragraph.text.strip()
                 if "Service Provider Corporate" in control_origination:
                     self.control_origination.append("Service Provider Corporate")
