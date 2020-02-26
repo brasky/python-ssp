@@ -33,6 +33,8 @@ class Control(object):
                 self.parts.append(row.cells[0].text.replace('Part ', '').strip())
             elif 'Req.' in row.cells[0].text and len(row.cells[0].text) < 8:
                 self.parts.append(row.cells[0].text.replace('Req. ', '').strip())
+            elif 'Ext.' in row.cells[0].text and len(row.cells[0].text) < 8:
+                self.parts.append(row.cells[0].text.strip())
 
         if len(self.parts) < 1 and len(self.implementation_table.rows) < 3:
             self.parts.append(None)
@@ -186,3 +188,8 @@ class Control(object):
                     self.control_origination.append("Inherited")
                 elif "Not" in control_origination:
                     self.control_origination.append("Not Applicable")
+
+#class Part():
+    #def __init__(self, id, implementation):
+        #self.id = id
+        #self.implementation = implementation
