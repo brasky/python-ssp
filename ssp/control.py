@@ -35,6 +35,8 @@ class Control(object):
                 self.parts.append(row.cells[0].text.replace('Req. ', '').strip())
             elif 'Ext.' in row.cells[0].text and len(row.cells[0].text) < 8:
                 self.parts.append(row.cells[0].text.strip())
+            elif bool(re.match(r'\w+-\d',row.cells[0].text)):
+                self.parts.append('Main')
 
         if len(self.parts) < 1 and len(self.implementation_table.rows) < 3:
             self.parts.append(None)
@@ -46,6 +48,11 @@ class Control(object):
         if part_id == None:
             try:
                 return self.implementation_table.cell(1,0)
+            except IndexError:
+                raise IndexError('Control table %s does not have enough rows to contain a control response.' % (self.number))
+        elif part_id.upper() == 'Main'.upper():
+            try:
+                return self.implementation_table.cell(1,1)
             except IndexError:
                 raise IndexError('Control table %s does not have enough rows to contain a control response.' % (self.number))
 
