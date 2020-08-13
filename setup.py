@@ -14,7 +14,7 @@ def text_of(relpath):
     return text
 
 NAME = 'python-ssp'
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 DESCRIPTION = 'Library for interfacing with FedRAMP system security plan templates.'
 KEYWORDS = 'fedramp ssp word'
 AUTHOR = 'Elliot DeMatteis'
