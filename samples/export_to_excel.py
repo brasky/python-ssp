@@ -20,7 +20,10 @@ def main(ssp_path, out_file):
     for control in ssp:
         for part in control:
             try:
-                row = [control.number, control.responsible_role, ", ".join(control.implementation_status), ", ".join(control.control_origination), control.part(part).text]
+                if part is not None:
+                    row = ["{} ({})".format(control.number, part), control.responsible_role, ", ".join(control.implementation_status), ", ".join(control.control_origination), control.part(part).text]
+                else:
+                    row = [control.number, control.responsible_role, ", ".join(control.implementation_status), ", ".join(control.control_origination), control.part(part).text]
                 worksheet.append(row)
             except Exception as e:
                 print(str(e))
