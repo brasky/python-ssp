@@ -147,9 +147,9 @@ class Control(object):
             p = paragraph._element
             if 'w14:checked w14:val="1"' in p.xml:
                 xpath_elements = p.xpath('.//w:t')
-                control_origination = xpath_elements[len(xpath_elements)-1].text.strip()
-                if not control_origination:
-                    control_origination = xpath_elements[len(xpath_elements)-2].text.strip() #TODO: this is really ugly, but had to be done because inherited checkboxes werent being captured.
+                for text in [element.text.strip() for element in xpath_elements]:
+                    if any(origination in text for origination in ['Service Provider', 'Inherited', 'Not', 'Customer']):
+                        control_origination = xpath_elements[1].text.strip()
                 if "Service Provider Corporate" in control_origination:
                     self.control_origination.append("Service Provider Corporate")
                 elif "Service Provider System Specific" in control_origination:
